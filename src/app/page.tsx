@@ -1,30 +1,30 @@
 "use client"
+import Chats from '@/components/chats';
+import Input from '@/components/input';
 import { supabase } from '@/supabaseClient';
 import { useEffect, useState } from 'react';
 
 
-const chats = () => {
+const page = () => {
   const [data,setData] = useState<any[]>([])
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await supabase.from('chats').select('*');
-      if (error) console.error(error);
-      else setData(data);
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+        const { data, error } = await supabase.from('chats').select('*');
+        if (error) console.error(error);
+        else setData(data);
+        };
 
-    fetchData();
-  }, []);
-  
+        fetchData();
+        
+    }, []);
   
 
   return (
-    <ul>
-
-      {data.map ((item) => (
-        <li key={item.id}> {item.chat}</li>
-      ))}
-    </ul>
+    <>
+    <Chats data={data}/>
+    <Input/>
+    </>
   )
 }
 
-export default chats
+export default page
